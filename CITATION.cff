@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the associated thesis."
+title: "Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning"
+abstract: >
+  Analysis pipeline for a gap-filling study using machine learning of European energy
+  storage projections. Estimates log-log OLS elasticities of storage and
+  battery capacity on VRE share, runs a multivariate diagnostic on solar
+  and wind capacity, and uses ElasticNet vs Random Forest with leave-one-out
+  cross-validation to impute storage and battery values for scenarios that
+  report the drivers without publishing the target.
+type: software
+authors:
+  - family-names: "Tsoneva"
+    given-names: "Vyara"
+    email: "vc.tsoneva@gmail.com"
+    affiliation: "Vienna University of Economics and Business"
+version: "17.0.0"
+date-released: "2026-07-29"
+license: MIT
+keywords:
+  - energy storage
+  - variable renewable energy
+  - European electricity system
+  - cross-source scenario analysis
+  - econometrics
+  - machine learning
+  - imputation
+references:
+  - type: thesis
+    title: "Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning"
+    authors:
+      - family-names: "Tsoneva"
+        given-names: "Vyara"
+    year: 2026
+    institution:
+      name: "Vienna University of Economics and Business"
+    thesis-type: "Master's thesis"
