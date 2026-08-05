@@ -1,5 +1,5 @@
 """
-ml_imputation.py - Stage 7: Tables 7-8 + Figures 7a/b.
+ml_imputation.py - Stage 7: Tables 9-10 + Figures 7a/b.
 
 For each group (EU/Europe, Global) and each target (total storage, battery storage),
 two model classes are trained on the target rows and compared by
@@ -8,7 +8,7 @@ refit on the full training set and used to generate predictions for the
 rows where the target is unobserved, with 95% bootstrap confidence
 intervals from 500 resamples.
 
-Model choice (see thesis §4.7):
+Model choice (see thesis §4.6):
   ElasticNet   - Zou, H. and Hastie, T. (2005).  Regularization and
                   variable selection via the Elastic Net.  J. R. Stat.
                   Soc. B, 67(2), 301-320.  L1+L2 penalty handles
@@ -57,7 +57,7 @@ def _build_models():
     Fresh instances every call - sklearn objects.
 
     Hyperparameters are read from ``config.ELASTIC_NET_GRID`` and
-    ``config.RANDOM_FOREST_GRID`` so the appendix table (Table C.2) and
+    ``config.RANDOM_FOREST_GRID`` so the appendix table (Table B.1) and
     the fits share a single source.  A change to the grid in
     ``config.py`` propagates both to the fits below and to the
     documentation in the appendix without an extra edit.
@@ -157,7 +157,7 @@ def predict_missing_ml(df, target, group="EU/Europe"):
     yhat_log = m_final.predict(X_te_imp)
 
     # Bootstrap 95% CI on predictions - resample count and seed both live
-    # in config so the appendix table (Table C.2) documents what the code
+    # in config so the appendix table (Table B.1) documents what the code
     # actually did.
     rng = np.random.default_rng(RANDOM_SEED)
     B = BOOTSTRAP_N
@@ -210,8 +210,8 @@ def predict_missing_ml(df, target, group="EU/Europe"):
             "scores": scores}
 
 
-# ── Table 7 ─────────────────────────────────────────────────────────────────
-def _write_table7(df, predictions, meta, groups):
+# ── Table 9 ─────────────────────────────────────────────────────────────────
+def _write_table9(df, predictions, meta, groups):
     rows = []
     for group in groups:
         for target in ["storage_gw", "battery_gw"]:
@@ -249,12 +249,12 @@ def _write_table7(df, predictions, meta, groups):
                     "Reliability":    f"Not fitted ({reason})",
                 })
     tbl = pd.DataFrame(rows)
-    csv_path = f"table7_predictions_summary.csv"
-    png_path = f"table7_predictions_summary.png"
+    csv_path = f"table9_predictions_summary.csv"
+    png_path = f"table9_predictions_summary.png"
     tbl.to_csv(csv_path, index=False)
     dataframe_to_png(
         tbl, png_path,
-        title="Table 7: Predictions for missing-target rows, by group and target",
+        title="Table 9: Predictions for missing-target rows, by group and target",
         footnote=("EU/Europe and Global are fitted separately, never pooled. "
                   f"Groups with n_train < {MIN_N_TRAIN_ML} are not fitted "
                   "(Vabalas et al., 2019, on ML with limited sample size)."),
@@ -262,8 +262,8 @@ def _write_table7(df, predictions, meta, groups):
     print(f"  Saved → {csv_path} / .png / .pdf")
 
 
-# ── Table 8 ─────────────────────────────────────────────────────────────────
-def _write_table8(meta, groups):
+# ── Table 10 ────────────────────────────────────────────────────────────────
+def _write_table10(meta, groups):
     rows = []
     for group in groups:
         for target in ["storage_gw", "battery_gw"]:
@@ -283,16 +283,16 @@ def _write_table8(meta, groups):
     if not rows:
         return
     tbl = pd.DataFrame(rows)
-    csv_path = f"table8_model_comparison.csv"
-    png_path = f"table8_model_comparison.png"
+    csv_path = f"table10_model_comparison.csv"
+    png_path = f"table10_model_comparison.png"
     tbl.to_csv(csv_path, index=False)
     dataframe_to_png(
         tbl, png_path,
-        title="Table 8: ElasticNet vs Random Forest - leave-one-out CV comparison",
+        title="Table 10: ElasticNet vs Random Forest - leave-one-out CV comparison",
         footnote=("For each group and target, both models are compared by "
                   "leave-one-out cross-validation on log-target predictions. "
                   "The model with the higher LOO-R² is used to generate "
-                  "the reported predictions in Table 7. LOO-MAE is reported "
+                  "the reported predictions in Table 9. LOO-MAE is reported "
                   "in GW on the back-transformed prediction scale."),
     )
     print(f"  Saved → {csv_path} / .png / .pdf")
@@ -387,8 +387,8 @@ def run_ml_stage(df):
         print(f"\n  Combined → predictions_all.csv  "
               f"({len(combined)} rows)")
 
-    _write_table7(df, predictions, meta, groups)
-    _write_table8(meta, groups)
+    _write_table9(df, predictions, meta, groups)
+    _write_table10(meta, groups)
 
     drew_eu     = _plot_predictions_figure(df, predictions, meta, "EU/Europe", "a")
     drew_global = _plot_predictions_figure(df, predictions, meta, "Global",    "b")

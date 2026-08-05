@@ -1,5 +1,5 @@
 """
-coverage.py - Stage 4b: Figure 3 variable-coverage heatmap.
+coverage.py - Stage 4b: Figure 4 variable-coverage heatmap.
 
 Renders a two-column heatmap (EU/Europe vs Global), which shows, for every
 variable, the row count and the corresponding percentage of the subgroup that reports
@@ -14,8 +14,8 @@ from config import HEATMAP_VARS
 
 
 def plot_coverage_heatmap(df):
-    """Write ``fig3_variable_coverage.{png,pdf}``."""
-    print(f"\n{'='*78}\nSTAGE 4b - Variable coverage heatmap (Figure 3)\n{'='*78}")
+    """Write ``fig4_variable_coverage.{png,pdf}``."""
+    print(f"\n{'='*78}\nSTAGE 4b - Variable coverage heatmap (Figure 4)\n{'='*78}")
 
     n_eu     = int((df["analysis_group"] == "EU/Europe").sum())
     n_global = int((df["analysis_group"] == "Global").sum())
@@ -61,12 +61,12 @@ def plot_coverage_heatmap(df):
     cbar.set_label("Share of the subgroup that reports the variable (%)",
                    fontsize=9)
 
-    ax.set_title("Figure 3: Variable coverage by analytical subgroup", pad=10)
+    ax.set_title("Figure 4: Variable coverage by analytical subgroup", pad=10)
     ax.set_xlabel("")
     plt.tight_layout()
-    plt.savefig(f"fig3_variable_coverage.png",
+    plt.savefig(f"fig4_variable_coverage.png",
                 bbox_inches="tight", dpi=220)
-    plt.savefig(f"fig3_variable_coverage.pdf",
+    plt.savefig(f"fig4_variable_coverage.pdf",
                 bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved → fig3_variable_coverage.png / .pdf")
+    print(f"  Saved → fig4_variable_coverage.png / .pdf")

@@ -2,14 +2,14 @@
 
 Analysis code for the master's thesis
 **_Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning_**
-by _Vyara Tsoneva_, _Vienna University of Economics and Business_, 29.07.2026.
+by _Vyara Tsoneva_, _Vienna University of Economics and Business_, 05.08.2026.
 _Department of Information Systems and Operations Management Institute for Data, Energy, and Sustainability (IDEaS)_, Supervisor: MSc Robin Fischer, Co-supervisor: DSc Behnam Zakeri.
 
 ---
 
 ## Overview
 
-This repository contains the full analysis pipeline for the thesis. The pipeline reads a cross-source dataset of 141 scenario-observations, which are extracted from 45 published European storage projections (2018-2026) and produces every table and figure reported in Chapter 5 (and also tables and figures, which are discussed in Chapter 3 and Appendix C) of the thesis.
+This repository contains the full analysis pipeline for the thesis. The pipeline reads a cross-source dataset of 141 scenario-observations, which are extracted from 45 published European storage projections (2018-2026) and produces every table and figure reported in Chapter 5 (and also tables and figures, which are discussed in Chapter 2 and Appendix A, B, and C) of the thesis.
 
 The pipeline is split into small modules of one per processing step, so each stage can be re-read and debugged in isolation. A single entry point (`src/run_analysis.py`) orchestrates them in order.
 
@@ -58,7 +58,7 @@ make install
 
 1. **Place the dataset** in the `data/` directory. Expected filename:
    ```
-   data/Energy-Storage_Data-Collection_Final_Vyara_Tsoneva.xlsx
+   data/Energy_Storage_Data_Collection_Vyara_Tsoneva.xlsx
    ```
    See [`data/README.md`](data/README.md) for provenance and formatting notes.
 
@@ -72,7 +72,7 @@ make install
 
    ```bash
    cd outputs
-   cp ../data/Energy-Storage_Data-Collection_Final_Vyara_Tsoneva.xlsx .
+   cp ../data/Energy_Storage_Data_Collection_Vyara_Tsoneva.xlsx .
    python ../src/run_analysis.py
    ```
 
@@ -107,14 +107,14 @@ storage-projections-thesis/
 │   ├── io_utils.py             Dataset discovery and loading
 │   ├── preprocessing.py        Region grouping, source category, scenario tier,
 │   │                            VRE imputation, log transforms
-│   ├── figure1_projections.py  Stage 3b: Figure 1 (§3.1)
-│   ├── descriptives.py         Stage 4: Table 4 descriptive statistics
-│   ├── coverage.py             Stage 4b: Figure 3 variable coverage heatmap
-│   ├── ols_univariate.py       Stage 5: Table 5 + Figure 4 (+ optional Figure 4b)
-│   ├── ols_multivariate.py     Stage 6: Table 6 + Figure 5 (+ multicollinearity)
-│   ├── ml_imputation.py        Stage 7: Tables 7-8 + Figures 7a/7b
+│   ├── figure1_projections.py  Stage 3b: Figure 1 (§2.3)
+│   ├── descriptives.py         Stage 4: Table 6 descriptive statistics
+│   ├── coverage.py             Stage 4b: Figure 4 variable coverage heatmap
+│   ├── ols_univariate.py       Stage 5: Table 7 + Figure 5 (+ optional Figure 5b)
+│   ├── ols_multivariate.py     Stage 6: Table 8 + Figure 6 (+ multicollinearity)
+│   ├── ml_imputation.py        Stage 7: Tables 9-10 + Figures 7a/7b
 │   ├── appendix_tables.py      Stage 7b: Tables C.1 (predictions summary) and
-│   │                            C.2 (hyperparameter grids and seed settings)
+│   │                            B.1 (hyperparameter grids and seed settings)
 │   └── report.py               Stage 8: plain-language interpretive report
 ├── data/
 │   └── README.md          Where to place the dataset
@@ -151,24 +151,24 @@ Each output file corresponds to a specific table or figure in the thesis.
 
 | Output file                                        | Thesis reference     | Content                                                    |
 |----------------------------------------------------|----------------------|------------------------------------------------------------|
-| `v18_fig1_projections_by_source.{png,pdf}`         | Figure 1, §3.1       | EU/Europe storage projections by horizon year and source category |
-| `v18_table4_descriptive_stats.{csv,png,pdf}`       | Table 4, §5.1        | Descriptive statistics, EU/Europe subgroup                 |
-| `v18_fig3_variable_coverage.{png,pdf}`             | Figure 3, §4.2       | Variable-coverage heatmap by subgroup                      |
-| `v18_table5_univariate_ols.{csv,png,pdf}`          | Table 5, §5.2        | Univariate log-log OLS results (storage, battery)          |
-| `v18_fig4_ols_scatter.{png,pdf}`                   | Figure 4, §5.2       | Univariate OLS scatters with 95% CI band                  |
+| `v18_fig1_projections_by_source.{png,pdf}`         | Figure 1, §2.3       | EU/Europe storage projections by horizon year and source category |
+| `v18_table4_descriptive_stats.{csv,png,pdf}`       | Table 6, §5.1        | Descriptive statistics, EU/Europe subgroup                 |
+| `v18_fig3_variable_coverage.{png,pdf}`             | Figure 4, §4.2       | Variable-coverage heatmap by subgroup                      |
+| `v18_table5_univariate_ols.{csv,png,pdf}`          | Table 7, §5.2        | Univariate log-log OLS results (storage, battery)          |
+| `v18_fig4_ols_scatter.{png,pdf}`                   | Figure 5, §5.2       | Univariate OLS scatters with 95% CI band                  |
 | `v18_fig4b_ols_scatter_global.{png,pdf}`           | (optional)           | Global-only OLS if sample allows; not produced     |
-| `v18_table6_multivariate_ols.{csv,png,pdf}`        | Table 6, §5.3        | Multivariate battery ~ solar + wind (diagnostic)           |
-| `v18_fig5_multivariate_scatter.{png,pdf}`          | Figure 5, §5.3       | Two univariate scatters (Battery vs Solar, vs Wind)        |
-| `v18_table7_predictions_summary.{csv,png,pdf}`     | Table 7, §5.5        | ML predictions summary by group and target                 |
-| `v18_table8_model_comparison.{csv,png,pdf}`        | Table 8, §5.5        | ElasticNet vs Random Forest LOO-CV comparison              |
-| `v18_fig7a_predictions_overview.{png,pdf}`         | Figure 7a, §5.5      | EU/Europe observed vs predicted, by horizon year           |
+| `v18_table6_multivariate_ols.{csv,png,pdf}`        | Table 8, §5.3        | Multivariate battery ~ solar + wind (diagnostic)           |
+| `v18_fig5_multivariate_scatter.{png,pdf}`          | Figure 6, §5.3       | Two univariate scatters (Battery vs Solar, vs Wind)        |
+| `v18_table7_predictions_summary.{csv,png,pdf}`     | Table 9, §5.4        | ML predictions summary by group and target                 |
+| `v18_table8_model_comparison.{csv,png,pdf}`        | Table 10, §5.4        | ElasticNet vs Random Forest LOO-CV comparison              |
+| `v18_fig7a_predictions_overview.{png,pdf}`         | Figure 7, §5.4      | EU/Europe observed vs predicted, by horizon year           |
 | `v18_fig7b_predictions_overview.{png,pdf}`         | (optional)           | Global overview if sample allows; not produced     |
 | `v18_tableC1_predictions_by_horizon.{csv,png,pdf}` | Table C.1, App. C    | EU/Europe predictions summarized by horizon year × target  |
-| `v18_tableC2_hyperparameter_grids.{csv,png,pdf}`   | Table C.2, App. C    | Hyperparameter grids and seed settings for both models     |
-| `v18_predictions_eu_battery_gw.csv`                | Appendix D           | Row-level battery predictions with 95% bootstrap CI       |
-| `v18_predictions_eu_storage_gw.csv`                | Appendix D           | Row-level storage predictions with 95% bootstrap CI       |
-| `v18_predictions_all.csv`                          | Appendix D           | Combined prediction file across groups                     |
-| `v18_variable_coverage.csv`                        | Chapter 4 supp.      | Full variable-coverage table by subgroup                   |
+| `v18_tableB1_hyperparameter_grids.{csv,png,pdf}`   | Table B.1, App. B    | Hyperparameter grids and seed settings for both models     |
+| `v18_predictions_eu_battery_gw.csv`                | Chapter 5 supp.      | Row-level battery predictions with 95% bootstrap CI       |
+| `v18_predictions_eu_storage_gw.csv`                | Chapter 5 supp.      | Row-level storage predictions with 95% bootstrap CI       |
+| `v18_predictions_all.csv`                          | Chapter 5 supp.      | Combined prediction file across groups                     |
+| `v18_variable_coverage.csv`                        | Chapter 4 supp.; Table A1, App. A | Full variable-coverage table by subgroup                   |
 | `v18_INTERPRETIVE_REPORT.txt`                      | (working document)   | Auto-generated interpretive summary; key numbers   |
 
 ---
@@ -176,11 +176,11 @@ Each output file corresponds to a specific table or figure in the thesis.
 ## Reproducibility
 
 - **Random seed 42** is used for the bootstrap resamples on the ML predictions, for the Random Forest fits, and for the ElasticNet inner-CV splits. The seed lives in `config.RANDOM_SEED`; every consumer imports it from there. Re-running the pipeline on the same dataset produces bitwise-identical outputs.
-- **Hyperparameter grids** (`config.ELASTIC_NET_GRID`, `config.RANDOM_FOREST_GRID`) are shared between the ML step and Appendix Table C.2 so the code and the documentation cannot drift apart. If a grid entry is changed in `config.py` and both are updated simultaneously.
+- **Hyperparameter grids** (`config.ELASTIC_NET_GRID`, `config.RANDOM_FOREST_GRID`) are shared between the ML step and Appendix Table B.1 so the code and the documentation cannot drift apart. If a grid entry is changed in `config.py` and both are updated simultaneously.
 - All computed statistics (OLS coefficients, CV scores, prediction ranges) are printed to `stdout` during execution and also written to `INTERPRETIVE_REPORT.txt`.
 - The pipeline applies a minimum training-sample size of eight rows for the ML step, which follows Vabalas et al. (2019). Groups that fall below the threshold are reported as *not fitted* rather than silently omitted.
 - Bracket aggregation for the OLS stage collapses rows, which share (publisher × publication year × horizon year × VRE share) to their median. This step is implemented in the OLS regressions but **not** to the ML training step, because the ML training set is already small and every independent row contributes to the median-imputed feature space.
-- The multivariate specification is retained as a diagnostic in Table 6 but is **not used for a compositional interpretation**: on the six-row sample, `corr(log solar, log wind) ≈ +0.99` and `VIF > 100` on both predictors. Section 5.3 uses the two univariate scatters in Figure 5 instead. This is documented inline in `src/ols_multivariate.py`.
+- The multivariate specification is retained as a diagnostic in Table 8 but is **not used for a compositional interpretation**: on the six-row sample, `corr(log solar, log wind) ≈ +0.99` and `VIF > 100` on both predictors. Section 5.3 uses the two univariate scatters in Figure 6 instead. This is documented inline in `src/ols_multivariate.py`.
 
 ---
 

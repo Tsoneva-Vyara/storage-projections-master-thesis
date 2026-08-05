@@ -67,25 +67,25 @@ def main():
     df = build_log_predictors(df)
     build_coverage_table(df)
 
-    # Stage 3b - Figure 1 (source-category scatter, §3.1)
+    # Stage 3b - Figure 1 (source-category scatter, §2.3)
     plot_figure1(df)
 
-    # Stage 4 - Descriptives (Table 4)
+    # Stage 4 - Descriptives (Table 6)
     run_descriptives(df)
 
-    # Stage 4b - Coverage heatmap (Figure 3)
+    # Stage 4b - Coverage heatmap (Figure 4)
     plot_coverage_heatmap(df)
 
-    # Stage 5 - Univariate OLS (Table 5, Figure 4, optional Figure 4b)
+    # Stage 5 - Univariate OLS (Table 7, Figure 5, optional Figure 5b)
     ols_uni, _ols_uni_global = run_univariate_stage(df)
 
-    # Stage 6 - Multivariate OLS (Table 6, Figure 5)
+    # Stage 6 - Multivariate OLS (Table 8, Figure 6)
     ols_multi = run_multivariate_stage(df)
 
-    # Stage 7 - ML imputation (Tables 7-8, Figure 7a/b)
+    # Stage 7 - ML imputation (Tables 9-10, Figure 7a/b)
     predictions, meta = run_ml_stage(df)
 
-    # Stage 7b - Appendix C tables (Table C.1 predictions summary, Table C.2 hyperparameters)
+    # Stage 7b - Appendix B and C tables (Table C.1 predictions summary, Table B.1 hyperparameters)
     run_appendix_stage(predictions)
 
     # Stage 8 - Interpretive report

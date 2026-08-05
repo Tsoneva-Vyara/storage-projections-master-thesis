@@ -1,5 +1,5 @@
 """
-ols_univariate.py - Stage 5: Table 5 + Figure 4.
+ols_univariate.py - Stage 5: Table 7 + Figure 5.
 
 Univariate log-log OLS of total storage and battery capacity on VRE share:
     log(Y) = alpha + beta * log(VRE%) + eps
@@ -79,8 +79,8 @@ def run_univariate_ols(df, target, group_filter=("EU/Europe",),
     }
 
 
-# ── Table 5 ─────────────────────────────────────────────────────────────────
-def _write_table5(ols_uni):
+# ── Table 7 ─────────────────────────────────────────────────────────────────
+def _write_table7(ols_uni):
     labels = {"storage_gw": "log(Total storage, GW)",
               "battery_gw": "log(Battery, GW)"}
     rows = []
@@ -98,19 +98,19 @@ def _write_table5(ols_uni):
             "N":                  r["n"],
         })
     tbl = pd.DataFrame(rows)
-    csv_path = f"table5_univariate_ols.csv"
-    png_path = f"table5_univariate_ols.png"
+    csv_path = f"table7_univariate_ols.csv"
+    png_path = f"table7_univariate_ols.png"
     tbl.to_csv(csv_path, index=False)
     dataframe_to_png(
         tbl, png_path,
-        title="Table 5: Univariate log-log OLS estimates of storage and battery capacity on VRE share",
+        title="Table 7: Univariate log-log OLS estimates of storage and battery capacity on VRE share",
         footnote="Standard errors are conventional OLS. Both regressions are estimated on study-level medians after bracket aggregation.",
     )
     print(f"  Saved → {csv_path} / .png / .pdf")
 
 
-# ── Figure 4 (main EU/Europe scatter) ───────────────────────────────────────
-def _plot_figure4(ols_uni):
+# ── Figure 5 (main EU/Europe scatter) ───────────────────────────────────────
+def _plot_figure5(ols_uni):
     fig, axes = plt.subplots(1, 2, figsize=(13, 5.5))
     for ax, target in zip(axes, ["storage_gw", "battery_gw"]):
         r = ols_uni.get(target)
@@ -156,20 +156,20 @@ def _plot_figure4(ols_uni):
         ax.grid(True, alpha=0.3, ls=":")
 
     plt.tight_layout()
-    plt.savefig(f"fig4_ols_scatter.png",
+    plt.savefig(f"fig5_ols_scatter.png",
                 bbox_inches="tight", dpi=200)
-    plt.savefig(f"fig4_ols_scatter.pdf", bbox_inches="tight")
+    plt.savefig(f"fig5_ols_scatter.pdf", bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved → fig4_ols_scatter.png / .pdf  (EU/Europe only)")
+    print(f"  Saved → fig5_ols_scatter.png / .pdf  (EU/Europe only)")
 
 
-# ── Optional Figure 4b (Global-only) ────────────────────────────────────────
-def _plot_figure4b(ols_uni_global):
+# ── Optional Figure 5b (Global-only) ────────────────────────────────────────
+def _plot_figure5b(ols_uni_global):
     targets = [t for t in ["storage_gw", "battery_gw"]
                if ols_uni_global.get(t) is not None]
     if not targets:
         print("  Note: Global sample too small on both targets to produce a "
-              "separate Global-only Figure 4b.  Global observations excluded "
+              "separate Global-only Figure 5b.  Global observations excluded "
               "from the main analysis.")
         return
 
@@ -218,12 +218,12 @@ def _plot_figure4b(ols_uni_global):
         ax.grid(True, alpha=0.3, ls=":")
 
     plt.tight_layout()
-    plt.savefig(f"fig4b_ols_scatter_global.png",
+    plt.savefig(f"fig5b_ols_scatter_global.png",
                 bbox_inches="tight", dpi=200)
-    plt.savefig(f"fig4b_ols_scatter_global.pdf",
+    plt.savefig(f"fig5b_ols_scatter_global.pdf",
                 bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved → fig4b_ols_scatter_global.png / .pdf  "
+    print(f"  Saved → fig5b_ols_scatter_global.png / .pdf  "
           f"(Global-only fit for {targets})")
 
 
@@ -236,7 +236,7 @@ def run_univariate_stage(df):
     (interpretive report).  ``ols_uni_global`` may be empty if the Global
     sample falls below the reporting threshold.
     """
-    print(f"\n{'='*78}\nSTAGE 5 - Univariate OLS  (log-log, plain SE)  → Figure 4\n{'='*78}")
+    print(f"\n{'='*78}\nSTAGE 5 - Univariate OLS  (log-log, plain SE)  → Figure 5\n{'='*78}")
 
     print("  Main analysis (EU/Europe only):")
     ols_uni = {
@@ -263,8 +263,8 @@ def run_univariate_stage(df):
         ols_uni_global[tgt] = run_univariate_ols(df, tgt,
                                                  group_filter=("Global",))
 
-    _write_table5(ols_uni)
-    _plot_figure4(ols_uni)
-    _plot_figure4b(ols_uni_global)
+    _write_table7(ols_uni)
+    _plot_figure5(ols_uni)
+    _plot_figure5b(ols_uni_global)
 
     return ols_uni, ols_uni_global

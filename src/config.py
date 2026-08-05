@@ -139,7 +139,7 @@ RELIABLE_R2_MIN     = 0.30
 RELIABLE_N_TRAIN    = 15
 INDICATIVE_R2_MIN   = 0.0
 
-# ── Variables reported in the descriptive-statistics table (Table 4) ─────────
+# ── Variables reported in the descriptive-statistics table (Table 6) ─────────
 DESC_VARS = [
     ("storage_gw",       "Total storage (GW)"),
     ("battery_gw",       "Battery (GW)"),
@@ -153,7 +153,7 @@ DESC_VARS = [
     ("year",             "Horizon year"),
 ]
 
-# ── Variables shown on the coverage heatmap (Figure 3) ───────────────────────
+# ── Variables shown on the coverage heatmap (Figure 4) ───────────────────────
 HEATMAP_VARS = [
     ("storage_gw",        "Total storage (GW)"),
     ("battery_gw",        "Battery (GW)"),
@@ -217,7 +217,7 @@ FEATURE_SET_NAMES = {
 RANDOM_SEED = 42
 
 # ── Hyperparameter grids for the ML step ─────────────────────────────────────
-# Documented here so the appendix table (Table C.2) and the ML code read from
+# Documented here so the appendix table (Table B.1) and the ML code read from
 # a single source of truth.  Grids follow standard defaults for small-sample
 # cross-source panels (Hastie et al., 2009, "The Elements of Statistical
 # Learning", 2nd ed., §7.10).  The ElasticNet grid keeps three L1-ratio

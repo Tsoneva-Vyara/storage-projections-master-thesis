@@ -74,9 +74,9 @@ def write_interpretive_report(ols_uni, ols_multi, predictions, meta,
                          "multivariate")
             lines.append("  coefficients are NOT identified on this sample.  "
                          "Report as")
-            lines.append("  a diagnostic in Table 6 and use the two univariate "
+            lines.append("  a diagnostic in Table 8 and use the two univariate "
                          "scatters")
-            lines.append("  (Figure 5) for the compositional discussion in "
+            lines.append("  (Figure 6) for the compositional discussion in "
                          "§5.3 / §6.1.")
         if ols_multi["n"] < 12:
             lines.append(f"  With N = {ols_multi['n']}, report as INDICATIVE "

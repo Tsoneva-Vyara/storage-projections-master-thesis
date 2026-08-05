@@ -1,15 +1,15 @@
 """
-appendix_tables.py - Appendix C tables.
+appendix_tables.py - Appendix B andC tables.
 
-Table C.1 - EU/Europe predictions summarized by horizon year and target
-            variable.  Median and interquartile range across the prediction
-            set.  Full row-level detail sits in ``predictions_all.csv``.
-
-Table C.2 - Hyperparameter grids and seed settings for both model classes
+Table B.1 - Hyperparameter grids and seed settings for both model classes
             (ElasticNet, Random Forest).  All random seeds in the analysis
             are fixed at 42 for reproducibility.  Grids follow standard
             defaults for small-sample cross-source panels
             (Hastie et al., 2009).
+
+Table C.1 - EU/Europe predictions summarized by horizon year and target
+            variable.  Median and interquartile range across the prediction
+            set.  Full row-level detail sits in ``predictions_all.csv``.
 
 Both tables read from ``config`` for the hyperparameter values and from the
 prediction dicts returned by ``ml_imputation.run_ml_stage`` for Table C.1,
@@ -103,7 +103,7 @@ def write_table_c1(predictions, group="EU/Europe"):
     return tbl
 
 
-# ── Table C.2 ───────────────────────────────────────────────────────────────
+# ── Table B.1 ───────────────────────────────────────────────────────────────
 def _format_alphas(alphas):
     """Compact display of the alpha grid - endpoints + count."""
     if len(alphas) == 0:
@@ -112,13 +112,13 @@ def _format_alphas(alphas):
             f"{alphas[0]:.1e} to {alphas[-1]:.1e}")
 
 
-def write_table_c2():
+def write_table_b1():
     """Document hyperparameter grids and seed settings for both model classes.
 
     Sourced from ``config.ELASTIC_NET_GRID`` and ``config.RANDOM_FOREST_GRID``
     so the table and the code cannot drift.
     """
-    print(f"\n{'='*78}\nAPPENDIX C.2 - Hyperparameter grids and seed settings\n{'='*78}")
+    print(f"\n{'='*78}\nAPPENDIX B.1 - Hyperparameter grids and seed settings\n{'='*78}")
 
     en = ELASTIC_NET_GRID
     rf = RANDOM_FOREST_GRID
@@ -194,12 +194,12 @@ def write_table_c2():
     ]
 
     tbl = pd.DataFrame(rows)
-    csv_path = f"tableC2_hyperparameter_grids.csv"
-    png_path = f"tableC2_hyperparameter_grids.png"
+    csv_path = f"tableB1_hyperparameter_grids.csv"
+    png_path = f"tableB1_hyperparameter_grids.png"
     tbl.to_csv(csv_path, index=False)
     dataframe_to_png(
         tbl, png_path,
-        title="Table C.2: Hyperparameter grids and seed settings for both model classes",
+        title="Table B.1: Hyperparameter grids and seed settings for both model classes",
         footnote=(
             "All random seeds in the analysis are fixed at 42 for reproducibility. "
             "Grids follow standard defaults for small-sample cross-source panels "
@@ -212,6 +212,6 @@ def write_table_c2():
 
 # ── Stage entry point ───────────────────────────────────────────────────────
 def run_appendix_stage(predictions):
-    """Write both Table C.1 and Table C.2."""
+    """Write both Table C.1 and Table B.1."""
     write_table_c1(predictions, group="EU/Europe")
-    write_table_c2()
+    write_table_b1()

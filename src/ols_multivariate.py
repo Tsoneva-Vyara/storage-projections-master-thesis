@@ -1,10 +1,10 @@
 """
-ols_multivariate.py - Stage 6: Table 6 + Figure 5.
+ols_multivariate.py - Stage 6: Table 8 + Figure 6.
 
 Multivariate log-log OLS of battery capacity on solar and wind capacity:
     log(Battery) = alpha + beta_s * log(Solar) + beta_w * log(Wind) + eps
 
-WHY FIGURE 5 IS TWO UNIVARIATE SCATTERS
+WHY FIGURE 6 IS TWO UNIVARIATE SCATTERS
 On the six aggregated rows, corr(log solar, log wind) is essentially +1
 and the VIF for each predictor is >100.  The multivariate coefficients
 (beta_solar, beta_wind) are therefore unidentified, and the sign flip on
@@ -14,8 +14,8 @@ univariate scatters visualize what the six rows
 indicate; each panel plots the bivariate relationship between
 battery capacity and the predictor of interest without using
 small-N multivariate OLS for something it cannot support.  The
-multivariate coefficient table (Table 6) is retained as a diagnostic;
-sections 4.5 and 5.3 of the thesis explain the multicollinearity issue.
+multivariate coefficient table (Table 8) is retained as a diagnostic;
+section 5.3 of the thesis explain the multicollinearity issue.
 """
 import numpy as np
 import pandas as pd
@@ -83,8 +83,8 @@ def run_multivariate_ols(df, target="battery_gw",
     return r
 
 
-# ── Table 6 ─────────────────────────────────────────────────────────────────
-def _write_table6(res):
+# ── Table 8 ─────────────────────────────────────────────────────────────────
+def _write_table8(res):
     rows = [
         {"Predictor": "log(Solar, GW)",
          "β":       f"{res['beta_solar']:+.3f}",
@@ -103,21 +103,21 @@ def _write_table6(res):
          "p-value": f"{res['p_intc']:.3f}"},
     ]
     tbl = pd.DataFrame(rows)
-    csv_path = f"table6_multivariate_ols.csv"
-    png_path = f"table6_multivariate_ols.png"
+    csv_path = f"table8_multivariate_ols.csv"
+    png_path = f"table8_multivariate_ols.png"
     tbl.to_csv(csv_path, index=False)
     dataframe_to_png(
         tbl, png_path,
-        title="Table 6: Multivariate log-log OLS of battery capacity on solar and wind capacity (diagnostic)",
+        title="Table 8: Multivariate log-log OLS of battery capacity on solar and wind capacity (diagnostic)",
         footnote=(f"R² = {res['r2']:.3f}   |   N = {res['n']}   |   "
                   "Standard errors are conventional OLS.  Multicollinearity "
-                  "diagnostic reported below; see §5.3 of the thesis and Figure 5."),
+                  "diagnostic reported below; see §5.3 of the thesis and Figure 6."),
     )
     print(f"  Saved → {csv_path} / .png / .pdf")
 
 
-# ── Figure 5 (two univariate scatters - see module docstring for rationale) ─
-def _plot_figure5(res):
+# ── Figure 6 (two univariate scatters - see module docstring for rationale) ─
+def _plot_figure6(res):
     data_mv = res["data"].copy()
     m_solar = smf.ols("_y ~ _x1", data=data_mv).fit()
     m_wind  = smf.ols("_y ~ _x2", data=data_mv).fit()
@@ -158,12 +158,12 @@ def _plot_figure5(res):
         ax.grid(True, alpha=0.3, ls=":")
 
     plt.tight_layout()
-    plt.savefig(f"fig5_multivariate_scatter.png",
+    plt.savefig(f"fig6_multivariate_scatter.png",
                 bbox_inches="tight", dpi=200)
-    plt.savefig(f"fig5_multivariate_scatter.pdf",
+    plt.savefig(f"fig6_multivariate_scatter.pdf",
                 bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved → fig5_multivariate_scatter.png / .pdf")
+    print(f"  Saved → fig6_multivariate_scatter.png / .pdf")
 
     return m_solar, m_wind
 
@@ -195,13 +195,13 @@ def _diagnose_multicollinearity(res, m_solar, m_wind):
 # ── Stage entry point ───────────────────────────────────────────────────────
 def run_multivariate_stage(df):
     """Run the multivariate OLS stage end-to-end."""
-    print(f"\n{'='*78}\nSTAGE 6 - Multivariate OLS  battery ~ log(solar) + log(wind)  → Figure 5\n{'='*78}")
+    print(f"\n{'='*78}\nSTAGE 6 - Multivariate OLS  battery ~ log(solar) + log(wind)  → Figure 6\n{'='*78}")
 
     res = run_multivariate_ols(df, target="battery_gw")
     if res is None:
         return None
 
-    _write_table6(res)
-    m_solar, m_wind = _plot_figure5(res)
+    _write_table8(res)
+    m_solar, m_wind = _plot_figure6(res)
     _diagnose_multicollinearity(res, m_solar, m_wind)
     return res
