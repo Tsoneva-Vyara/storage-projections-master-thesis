@@ -3,7 +3,7 @@
 Analysis code for the master's thesis
 **_Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning_**
 by _Vyara Tsoneva_, _Vienna University of Economics and Business_, 05.08.2026.
-_Department of Information Systems and Operations Management Institute for Data, Energy, and Sustainability (IDEaS)_, Supervisor: MSc Robin Fischer, Co-supervisor: DSc Behnam Zakeri.
+_Department of Information Systems and Operations Management Institute for Data, Energy, and Sustainability (IDEaS)_, Supervisor: DSc Behnam Zakeri, Co-supervisor: MSc Robin Fischer.
 
 ---
 
@@ -249,7 +249,7 @@ If you use this code, please cite the thesis and the software separately. The re
 
 Short-form citation:
 
-> _Vyara Tsoneva_ (2026). *Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning* [Master's thesis, _Vienna University of Economics and Business_]. Software available at _[REPOSITORY URL]_.
+> _Vyara Tsoneva_ (2026). *Estimating Future Energy Storage Requirements for Renewable Integration in Europe: A Gap-Filling Approach Using Machine Learning* [Master's thesis, _Vienna University of Economics and Business_]. Software available at _https://github.com/Tsoneva-Vyara/storage-projections-master-thesis_.
 
 ---
 
