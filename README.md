@@ -57,12 +57,18 @@ make install
 ## Usage
 
 1. **Place the dataset** in the `data/` directory. Expected filename:
-   ```
+```
    data/Energy_Storage_Data_Collection_Vyara_Tsoneva.xlsx
-   ```
+```
    See [`data/README.md`](data/README.md) for provenance and formatting notes.
 
-2. **Run the pipeline** from the repository root:
+2. **First-time setup:** create the `outputs/` folder if it does not already exist:
+
+```bash
+   mkdir outputs
+```
+
+3. **Run the pipeline** from the repository root:
 
    ```bash
    make run
@@ -78,7 +84,7 @@ make install
 
    The pipeline writes all outputs (CSVs, PNGs, PDFs, and the interpretive report) into the current working directory, which is why running it from `outputs/` keeps everything organized.
 
-3. **Inspect the outputs.** All figures, tables, and the interpretive report appear in `outputs/`.
+4. **Inspect the outputs.** All figures, tables, and the interpretive report appear in `outputs/`.
 
 To remove all generated outputs and start clean:
 
@@ -118,8 +124,7 @@ storage-projections-thesis/
 │   └── report.py               Stage 8: plain-language interpretive report
 ├── data/
 │   └── README.md          Where to place the dataset
-└── outputs/
-    └── .gitkeep           Regenerable analysis outputs arrive here
+└── outputs/               Created on first run; regenerable analysis outputs arrive here
 ```
 
 ### How the modules connect
@@ -152,15 +157,15 @@ Each output file corresponds to a specific table or figure in the thesis.
 | Output file                                        | Thesis reference     | Content                                                    |
 |----------------------------------------------------|----------------------|------------------------------------------------------------|
 | `v18_fig1_projections_by_source.{png,pdf}`         | Figure 1, §2.3       | EU/Europe storage projections by horizon year and source category |
-| `v18_table4_descriptive_stats.{csv,png,pdf}`       | Table 6, §5.1        | Descriptive statistics, EU/Europe subgroup                 |
-| `v18_fig3_variable_coverage.{png,pdf}`             | Figure 4, §4.2       | Variable-coverage heatmap by subgroup                      |
-| `v18_table5_univariate_ols.{csv,png,pdf}`          | Table 7, §5.2        | Univariate log-log OLS results (storage, battery)          |
-| `v18_fig4_ols_scatter.{png,pdf}`                   | Figure 5, §5.2       | Univariate OLS scatters with 95% CI band                  |
-| `v18_fig4b_ols_scatter_global.{png,pdf}`           | (optional)           | Global-only OLS if sample allows; not produced     |
-| `v18_table6_multivariate_ols.{csv,png,pdf}`        | Table 8, §5.3        | Multivariate battery ~ solar + wind (diagnostic)           |
-| `v18_fig5_multivariate_scatter.{png,pdf}`          | Figure 6, §5.3       | Two univariate scatters (Battery vs Solar, vs Wind)        |
-| `v18_table7_predictions_summary.{csv,png,pdf}`     | Table 9, §5.4        | ML predictions summary by group and target                 |
-| `v18_table8_model_comparison.{csv,png,pdf}`        | Table 10, §5.4        | ElasticNet vs Random Forest LOO-CV comparison              |
+| `v18_table6_descriptive_stats.{csv,png,pdf}`       | Table 6, §5.1        | Descriptive statistics, EU/Europe subgroup                 |
+| `v18_fig4_variable_coverage.{png,pdf}`             | Figure 4, §4.2       | Variable-coverage heatmap by subgroup                      |
+| `v18_table7_univariate_ols.{csv,png,pdf}`          | Table 7, §5.2        | Univariate log-log OLS results (storage, battery)          |
+| `v18_fig5_ols_scatter.{png,pdf}`                   | Figure 5, §5.2       | Univariate OLS scatters with 95% CI band                  |
+| `v18_fig5b_ols_scatter_global.{png,pdf}`           | (optional)           | Global-only OLS if sample allows; not produced     |
+| `v18_table8_multivariate_ols.{csv,png,pdf}`        | Table 8, §5.3        | Multivariate battery ~ solar + wind (diagnostic)           |
+| `v18_fig6_multivariate_scatter.{png,pdf}`          | Figure 6, §5.3       | Two univariate scatters (Battery vs Solar, vs Wind)        |
+| `v18_table9_predictions_summary.{csv,png,pdf}`     | Table 9, §5.4        | ML predictions summary by group and target                 |
+| `v18_table10_model_comparison.{csv,png,pdf}`        | Table 10, §5.4        | ElasticNet vs Random Forest LOO-CV comparison              |
 | `v18_fig7a_predictions_overview.{png,pdf}`         | Figure 7, §5.4      | EU/Europe observed vs predicted, by horizon year           |
 | `v18_fig7b_predictions_overview.{png,pdf}`         | (optional)           | Global overview if sample allows; not produced     |
 | `v18_tableC1_predictions_by_horizon.{csv,png,pdf}` | Table C.1, App. C    | EU/Europe predictions summarized by horizon year × target  |
